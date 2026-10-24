@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#1b0b14">
+    <title>Para você, Kay 💌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vinho: #1b0b14;
+            --vinho-claro: #3a1426;
+            --rosa: #ff6b8b;
+            --rosa-suave: #ffb3c4;
+            --dourado: #f3d9a4;
+            --texto: #fbeef2;
+            --texto-suave: rgba(251, 238, 242, 0.6);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: grid;
+            place-items: center;
+            padding: 32px 16px;
+            background: radial-gradient(ellipse at center, var(--vinho-claro) 0%, var(--vinho) 70%) fixed, var(--vinho);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--texto);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Envelope inicial */
+        .envelope {
+            text-align: center;
+            cursor: pointer;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .envelope.aberto {
+            opacity: 0;
+            transform: scale(1.3);
+            pointer-events: none;
+        }
+
+        .selo {
+            font-size: 5rem;
+            display: inline-block;
+            animation: flutuar 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(255, 107, 139, 0.55));
+        }
+
+        @keyframes flutuar {
+            50% { transform: translateY(-10px) rotate(-3deg); }
+        }
+
+        .envelope h1 {
+            margin-top: 16px;
+            font-family: 'Great Vibes', cursive;
+            font-weight: 400;
+            font-size: 2.6rem;
+            color: var(--rosa-suave);
+        }
+
+        .envelope p {
+            margin-top: 18px;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--texto-suave);
+            animation: piscar 2s ease-in-out infinite;
+        }
+
+        @keyframes piscar { 50% { opacity: 0.35; } }
+
+        /* Carta */
+        .carta {
+            display: none;
+            width: 100%;
+            max-width: 460px;
+            text-align: center;
+        }
+
+        .carta.visivel { display: block; }
+
+        .carta .para {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.4rem;
+            color: var(--rosa-suave);
+            margin-bottom: 28px;
+        }
+
+        .linha {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            line-height: 1.55;
+            margin-bottom: 22px;
+            opacity: 0;
+            filter: blur(6px);
+            transform: translateY(12px);
+            transition: opacity 1.6s ease, filter 1.6s ease, transform 1.6s ease;
+        }
+
+        .linha.destaque {
+            font-style: italic;
+            color: var(--rosa-suave);
+        }
+
+        .mostrar {
+            opacity: 1 !important;
+            filter: none !important;
+            transform: none !important;
+        }
+
+        .assinatura {
+            margin-top: 14px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: var(--dourado);
+        }
+
+        .continuar {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 26px;
+            border: 1px solid rgba(255, 200, 215, 0.3);
+            border-radius: 999px;
+            color: var(--texto-suave);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .continuar:hover { background: rgba(255, 107, 139, 0.15); color: var(--texto); }
+
+        /* Pétalas */
+        .petala {
+            position: fixed;
+            top: -40px;
+            pointer-events: none;
+            animation: cair linear forwards;
+            z-index: 0;
+        }
+
+        @keyframes cair {
+            to { transform: translateY(110vh) translateX(40px) rotate(400deg); }
+        }
+
+        .envelope, .carta { position: relative; z-index: 1; }
+    </style>
+</head>
+<body>
+    <div class="envelope" role="button" tabindex="0">
+        <div class="selo">💌</div>
+        <h1>Para você, Kay</h1>
+        <p>toque para abrir</p>
+    </div>
+
+    <main class="carta">
+        <h2 class="para linha">Kay,</h2>
+        <p class="linha">Você foi o melhor capítulo da minha vida, e não quero deixar que a nossa história termine.</p>
+        <p class="linha">Cada dia longe de você me ensinou algumas coisas.</p>
+        <p class="linha destaque">A principal delas é que eu não quero aprender a viver sem você.</p>
+        <p class="linha">Por isso gostaria que você deixasse eu escrever o resto dessa história ao seu lado.</p>
+        <p class="assinatura linha">Bruno</p>
+        <a class="continuar linha" href="index.html">a nossa história continua →</a>
+    </main>
+
+    <script>
+        const envelope = document.querySelector('.envelope');
+        const carta = document.querySelector('.carta');
+        const linhas = carta.querySelectorAll('.linha');
+        let aberta = false;
+
+        function abrir() {
+            if (aberta) return;
+            aberta = true;
+            envelope.classList.add('aberto');
+
+            setTimeout(() => {
+                envelope.remove();
+                carta.classList.add('visivel');
+                // Cada frase aparece com calma, como se estivesse sendo escrita
+                linhas.forEach((linha, i) => {
+                    setTimeout(() => linha.classList.add('mostrar'), 400 + i * 2200);
+                });
+                setInterval(criarPetala, 900);
+            }, 800);
+        }
+
+        envelope.addEventListener('click', abrir);
+        envelope.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') abrir();
+        });
+
+        const petalas = ['🌹', '🌸', '❤️', '💕'];
+        function criarPetala() {
+            if (document.hidden) return;
+            const p = document.createElement('div');
+            p.className = 'petala';
+            p.textContent = petalas[Math.floor(Math.random() * petalas.length)];
+            p.style.left = Math.random() * 95 + 'vw';
+            p.style.fontSize = Math.random() * 14 + 12 + 'px';
+            p.style.opacity = Math.random() * 0.35 + 0.25;
+            p.style.animationDuration = Math.random() * 4 + 7 + 's';
+            document.body.appendChild(p);
+            p.addEventListener('animationend', () => p.remove());
+        }
+    </script>
+</body>
+</html>

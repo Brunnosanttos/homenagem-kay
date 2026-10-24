@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&display=swap');
-
 :root {
-    --primary-color: #ff4d6d;
-    --secondary-color: #ff758f;
-    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --vinho: #1b0b14;
+    --vinho-claro: #3a1426;
+    --rosa: #ff6b8b;
+    --rosa-suave: #ffb3c4;
+    --dourado: #f3d9a4;
+    --texto: #fbeef2;
+    --texto-suave: rgba(251, 238, 242, 0.65);
+    --vidro: rgba(255, 255, 255, 0.06);
+    --vidro-borda: rgba(255, 200, 215, 0.18);
 }
 
 * {
@@ -14,200 +16,286 @@
     padding: 0;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--bg-gradient);
+    gap: 36px;
+    padding: 48px 16px 40px;
+    background: radial-gradient(ellipse at top, var(--vinho-claro) 0%, var(--vinho) 60%) fixed, var(--vinho);
     font-family: 'Montserrat', sans-serif;
-    color: white;
+    color: var(--texto);
     overflow-x: hidden;
-    padding: 20px 0;
 }
 
-/* Header Section */
-.top {
-    text-align: center;
-    margin-bottom: 20px;
-    z-index: 10;
+/* Brilho suave de fundo */
+.brilho {
+    position: fixed;
+    inset: -20%;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 107, 139, 0.12), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(243, 217, 164, 0.08), transparent 40%);
+    animation: respirar 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.top h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3rem;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin: 0;
+@keyframes respirar {
+    to { transform: scale(1.15) rotate(6deg); }
 }
 
-/* Quote Section */
-.bottom {
-    max-width: 90vw;
-    text-align: center;
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    padding: 20px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-}
-
-.bottom p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    font-weight: 300;
-    font-style: italic;
-}
-
-/* Carousel Section */
-.carousel {
-    width: 90vw;
-    max-width: 500px;
-    aspect-ratio: 4 / 5;
+body > *:not(.brilho):not(.emoji) {
     position: relative;
-    border-radius: 20px;
+    z-index: 2;
+    width: 100%;
+    max-width: 480px;
+    animation: surgir 1.2s ease both;
+}
+
+@keyframes surgir {
+    from { opacity: 0; transform: translateY(20px); }
+}
+
+/* Cabeçalho */
+.hero { text-align: center; }
+
+.sobre, .desde {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+}
+
+.hero h1 {
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    font-size: clamp(3rem, 14vw, 4.4rem);
+    line-height: 1.1;
+    margin: 10px 0;
+    color: var(--rosa-suave);
+    text-shadow: 0 0 30px rgba(255, 107, 139, 0.45);
+}
+
+.hero h1 span { color: var(--dourado); }
+
+/* Carrossel */
+.carousel {
+    aspect-ratio: 3 / 4;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    border: 2px solid var(--glass-border);
-    margin-bottom: 30px;
-    z-index: 10;
+    background: #000;
+    border: 1px solid var(--vidro-borda);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 107, 139, 0.15);
+    touch-action: pan-y;
+    user-select: none;
 }
 
 .carousel-inner {
     display: flex;
-    width: 100%;
     height: 100%;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.7s cubic-bezier(0.22, 0.8, 0.3, 1);
+    will-change: transform;
 }
 
-.carousel-inner img {
+/* Cada slide mostra a foto inteira, com uma versão desfocada dela preenchendo o fundo */
+.slide {
+    position: relative;
     flex: 0 0 100%;
-    width: 100%;
     height: 100%;
-    object-fit: cover;
+    overflow: hidden;
 }
 
-/* Navigation Buttons */
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: -30px;
+    background: var(--foto) center / cover;
+    filter: blur(24px) brightness(0.55);
+}
+
+.slide img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.carousel::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 25%;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    pointer-events: none;
+}
+
 .prev, .next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    border: none;
-    color: white;
     width: 40px;
     height: 40px;
+    border: none;
     border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 1rem;
     cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 20;
+    transition: background 0.3s;
+    z-index: 3;
 }
 
-.prev:hover, .next:hover {
-    background: var(--primary-color);
-}
+.prev:hover, .next:hover { background: var(--rosa); }
+.prev { left: 12px; }
+.next { right: 12px; }
 
-.prev { left: 15px; }
-.next { right: 15px; }
-
-/* Indicators */
 .carousel-indicators {
     position: absolute;
-    bottom: 20px;
+    bottom: 18px;
     left: 50%;
     transform: translateX(-50%);
-    list-style: none;
     display: flex;
-    gap: 8px;
-    z-index: 20;
+    gap: 7px;
+    list-style: none;
+    z-index: 3;
 }
 
 .carousel-indicators li {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .carousel-indicators li.active {
-    width: 25px;
-    border-radius: 4px;
-    background: var(--primary-color);
+    width: 22px;
+    background: var(--rosa-suave);
 }
 
-/* Counter Title */
-h1.counter-title {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 20px;
-    font-weight: 700;
-    color: var(--secondary-color);
+/* Texto */
+.cartao {
+    text-align: center;
+    padding: 28px 24px;
+    border-radius: 24px;
+    background: var(--vidro);
+    border: 1px solid var(--vidro-borda);
+    backdrop-filter: blur(10px);
 }
 
-/* Counter Grid */
+.cartao p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.cartao .frase {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--vidro-borda);
+    font-style: italic;
+    color: var(--rosa-suave);
+}
+
+/* Contador */
+.tempo { text-align: center; }
+
+.tempo h2 {
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    font-size: 2.4rem;
+    color: var(--rosa-suave);
+    margin-bottom: 16px;
+}
+
 .contador {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    width: 90vw;
-    max-width: 500px;
-    z-index: 10;
+    gap: 12px;
 }
 
 .bloco {
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    padding: 15px 10px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 16px 6px;
+    border-radius: 18px;
+    background: var(--vidro);
+    border: 1px solid var(--vidro-borda);
 }
 
 .numero {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 5px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--texto);
+    font-variant-numeric: tabular-nums;
 }
 
 .label {
-    font-size: 0.75rem;
+    margin-top: 6px;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--texto-suave);
 }
 
-/* Falling Hearts */
+.total {
+    margin-top: 24px;
+    font-size: 1.05rem;
+}
+
+.total strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--dourado);
+}
+
+.coracao {
+    display: inline-block;
+    color: var(--rosa);
+    animation: bater 1.4s ease-in-out infinite;
+}
+
+@keyframes bater {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.3); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.2); }
+}
+
+.pausa {
+    margin-top: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--texto-suave);
+}
+
+footer p {
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.9rem;
+    color: var(--dourado);
+}
+
+/* Corações caindo */
 .emoji {
     position: fixed;
     top: -50px;
     pointer-events: none;
     z-index: 1;
-    animation: fall linear forwards;
+    animation: cair linear forwards;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(360deg);
-    }
+@keyframes cair {
+    to { transform: translateY(110vh) rotate(360deg); }
 }
 
-/* Mobile Optimizations */
-@media (max-width: 480px) {
-    .top h1 { font-size: 2.2rem; }
-    .bottom p { font-size: 1rem; }
-    .numero { font-size: 1.5rem; }
-    .carousel { aspect-ratio: 1 / 1; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
 }

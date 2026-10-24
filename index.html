@@ -3,73 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b0b14">
     <title>Bruno & Kayane ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <script src="scripts.js" defer></script>
 </head>
 <body>
-    <div class="top">
-        <h1>Bruno & Kayane</h1>
-    </div>
+    <div class="brilho" aria-hidden="true"></div>
 
-    <div class="bottom">
-        <p>Estar ao seu lado faz com que tudo tenha mais significado, mais cor e mais propósito. Admiro sua força, seu jeito único de enxergar o mundo e a forma com que transforma qualquer momento em algo inesquecível. ❤️</p>
-        <p style="margin-top: 15px; font-weight: 400; font-size: 0.9rem;">"Você é, sem dúvida, a melhor parte dos meus dias, e tenho muita sorte de poder compartilhar a vida com você."</p>
-    </div>
+    <header class="hero">
+        <p class="sobre">a nossa história</p>
+        <h1>Bruno <span>&</span> Kayane</h1>
+        <p class="desde">desde 18 · 12 · 2025</p>
+    </header>
 
-    <div class="carousel">
+    <section class="carousel" aria-label="Nossas fotos">
         <div class="carousel-inner">
-            <img src="3B765363-61A9-48B2-96B0-A69B832C0469.jpg" alt="Momento 1">
-            <img src="875F5B16-39B6-4CBC-817B-C29693AA82DD.jpg" alt="Momento 2">
-            <img src="D0CC155D-38CF-4761-AAAD-12A9BEABF104.jpg" alt="Momento 3">
-            <img src="FA86F0FA-0E61-4187-8991-9422687ACC3E.jpg" alt="Momento 4">
-            <img src="IMG_7796.jpg" alt="Momento 5">
-            <img src="IMG_7859.jpg" alt="Momento 6">
-            <img src="IMG_7973.jpg" alt="Momento 7">
+            <img src="fotos/01-espelho.jpg" alt="Nós dois no espelho">
+            <img src="fotos/02-cidade.jpg" alt="Nós dois com a cidade à noite">
+            <img src="fotos/03-por-do-sol.jpg" alt="Nós dois no pôr do sol">
+            <img src="fotos/04-aliancas.jpg" alt="Nossas mãos com as alianças">
+            <img src="fotos/05-juntinhos.jpg" alt="Nós dois juntinhos">
+            <img src="fotos/06-oculos.jpg" alt="Nós dois sorrindo">
+            <img src="fotos/07-praia.jpg" alt="Nós dois na praia">
+            <img src="fotos/08-academia.jpg" alt="Nós dois na academia">
+            <img src="fotos/09-hamburguer.jpg" alt="Nós dois comendo hambúrguer">
+            <img src="fotos/10-noite.jpg" alt="Nós dois à noite">
+            <img src="fotos/11-flores.jpg" alt="Você com as flores">
         </div>
-        <ul class="carousel-indicators">
-          <li data-target="0" class="active"></li>
-          <li data-target="1"></li>
-          <li data-target="2"></li>
-          <li data-target="3"></li>
-          <li data-target="4"></li>
-          <li data-target="5"></li>
-          <li data-target="6"></li>
-        </ul>
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
-    </div>
+        <button class="prev" aria-label="Foto anterior">&#10094;</button>
+        <button class="next" aria-label="Próxima foto">&#10095;</button>
+        <ul class="carousel-indicators"></ul>
+    </section>
 
-    <h1 class="counter-title">Juntos há</h1>
-    <div class="contador">
-      <div class="bloco">
-        <div class="numero" id="anos">00</div>
-        <div class="label">anos</div>
-      </div>
-      <div class="bloco">
-        <div class="numero" id="meses">00</div>
-        <div class="label">meses</div>
-      </div>
-      <div class="bloco">
-        <div class="numero" id="dias">00</div>
-        <div class="label">dias</div>
-      </div>
-      <div class="bloco">
-        <div class="numero" id="horas">00</div>
-        <div class="label">horas</div>
-      </div>
-      <div class="bloco">
-        <div class="numero" id="minutos">00</div>
-        <div class="label">minutos</div>
-      </div>
-      <div class="bloco">
-        <div class="numero" id="segundos">00</div>
-        <div class="label">segundos</div>
-      </div>
-    </div>
+    <section class="cartao">
+        <p>Estar ao seu lado faz com que tudo tenha mais significado, mais cor e mais propósito. Admiro sua força, seu jeito único de enxergar o mundo e a forma com que transforma qualquer momento em algo inesquecível.</p>
+        <p class="frase">"Você é, sem dúvida, a melhor parte dos meus dias, e tenho muita sorte de poder compartilhar a vida com você."</p>
+    </section>
 
-    <div style="margin-top: 40px; text-align: center; z-index: 10;">
-        <p style="font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--secondary-color);">Para sempre nós dois... ✨</p>
-    </div>
+    <section class="tempo">
+        <h2>Juntos há</h2>
+        <div class="contador">
+            <div class="bloco"><div class="numero" id="anos">00</div><div class="label">anos</div></div>
+            <div class="bloco"><div class="numero" id="meses">00</div><div class="label">meses</div></div>
+            <div class="bloco"><div class="numero" id="dias">00</div><div class="label">dias</div></div>
+            <div class="bloco"><div class="numero" id="horas">00</div><div class="label">horas</div></div>
+            <div class="bloco"><div class="numero" id="minutos">00</div><div class="label">minutos</div></div>
+            <div class="bloco"><div class="numero" id="segundos">00</div><div class="label">segundos</div></div>
+        </div>
+        <p class="total"><strong id="total-dias">0</strong> dias juntos <span class="coracao">❤</span></p>
+        <p class="pausa">(com uma pausa pra perceber que não dá pra ficar sem você)</p>
+    </section>
+
+    <footer>
+        <p>Para sempre nós dois... ✨</p>
+    </footer>
 </body>
 </html>
