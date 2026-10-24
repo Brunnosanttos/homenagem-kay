@@ -150,6 +150,30 @@ function atualizarContador() {
 setInterval(atualizarContador, 1000);
 atualizarContador();
 
+// --- EASTER EGG: CORAÇÃO QUE ABRE A CARTA ---
+document.querySelector('.coracao').addEventListener('click', (e) => {
+  e.preventDefault();
+  const destino = e.currentTarget.href;
+  const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+
+  // Explosão de corações saindo do coração tocado
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'explosao';
+    p.textContent = ['❤️', '💖', '💕'][i % 3];
+    const angulo = (i / 18) * Math.PI * 2;
+    const raio = 80 + Math.random() * 80;
+    p.style.left = `${left + width / 2 - 10}px`;
+    p.style.top = `${top + height / 2 - 10}px`;
+    p.style.setProperty('--dx', `${Math.cos(angulo) * raio}px`);
+    p.style.setProperty('--dy', `${Math.sin(angulo) * raio}px`);
+    document.documentElement.appendChild(p);
+  }
+
+  setTimeout(() => document.body.classList.add('saindo'), 400);
+  setTimeout(() => { window.location.href = destino; }, 1300);
+});
+
 // --- CORAÇÕES CAINDO ---
 const emojis = ["❤️", "💖", "💕", "🌸", "✨"];
 const limiteEmojis = 12;

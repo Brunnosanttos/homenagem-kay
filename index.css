@@ -255,10 +255,32 @@ body > *:not(.brilho):not(.emoji) {
     color: var(--dourado);
 }
 
+/* Easter egg: o coração que bate leva para a carta */
 .coracao {
     display: inline-block;
+    padding: 4px;
     color: var(--rosa);
+    text-decoration: none;
+    cursor: pointer;
     animation: bater 1.4s ease-in-out infinite;
+}
+
+.coracao:hover { text-shadow: 0 0 12px var(--rosa); }
+
+.explosao {
+    position: fixed;
+    pointer-events: none;
+    z-index: 50;
+    animation: explodir 0.9s ease-out forwards;
+}
+
+@keyframes explodir {
+    to { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
+}
+
+body.saindo > * {
+    transition: opacity 0.9s ease;
+    opacity: 0;
 }
 
 @keyframes bater {
